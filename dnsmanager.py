@@ -54,6 +54,7 @@ def handler(event, context):
     terraform_config.close()
 
     # run the terraform
+    # dont do this yet until you validate the new ACM SSL certificates through emails.  See the readme for more information.
     # tf_run(full_block, data, config)
 
 

@@ -108,18 +108,29 @@ def build_listeners(full_block, data, config):
                 print(cert_test_result)
                 cert_arn = cert_test_result[0]['CertificateArn']
 
-            listener_block = {
-                v['domain'].replace('.', '-') + '-' + 'listener': {
-                    "load_balancer_arn": "${aws_lb." + config['app_name'].upper() + '-ALB-' + v['alb'] + '.arn}',
-                    "port": "443",
-                    "protocol": "HTTPS",
-                    "ssl_policy": config['ssl_policy'],
-                    "certificate_arn": cert_arn,
-                    "default_action": {
-                        "target_group_arn": "${aws_lb_target_group." + config['app_name'].upper() + '-ALB-' + v['alb'] + '-TG' + '.arn}',
-                        "type": "forward"
-                    }
+            # listener_block = {
+            #     v['domain'].replace('.', '-') + '-' + 'listener': {
+            #         "load_balancer_arn": "${aws_lb." + config['app_name'].upper() + '-ALB-' + v['alb'] + '.arn}',
+            #         "port": "443",
+            #         "protocol": "HTTPS",
+            #         "ssl_policy": config['ssl_policy'],
+            #         "certificate_arn": cert_arn,
+            #         "default_action": {
+            #             "target_group_arn": "${aws_lb_target_group." + config['app_name'].upper() + '-ALB-' + v['alb'] + '-TG' + '.arn}',
+            #             "type": "forward"
+            #         }
+            #     }
+            # }
+
+            aws_route53_zone_block = {
+                v['domain'].replace('.', '-') + '-' + 'route53zone': {
+                    "name": v['domain']
                 }
+            }
+
+            aws_route53_record_block = {
+                "zone_id": "${aws_route53_zone." + v['domain'].replace('.', '-') + '-' + 'route53zone' + ".zone_id}"
+                "name":
             }
 
             full_block['resource']['aws_lb_listener'].update(listener_block)

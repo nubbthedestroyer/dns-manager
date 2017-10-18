@@ -8,7 +8,7 @@
 > * Grabs the domains and info
 > * Creates/maintains enough ALBs to support the domains
 > * Creates ACM certificate for each domain
-> * Creates and ALB listener for each domain and attaches the cert and the ALB targetgroup it should be assigned to based on its database entry.
+> * Creates a Route53 hosted zone and record set for each domain and attaches the cert and the ALB listener it should be assigned to based on its database entry.
 
 
 #### Environment Variables

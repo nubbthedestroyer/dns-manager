@@ -1,0 +1,373 @@
+{
+    "resource": {
+        "aws_lb_listener": {
+            "abc11-com-listener": {
+                "protocol": "HTTPS", 
+                "ssl_policy": "ELBSecurityPolicy-2016-08", 
+                "port": "443", 
+                "load_balancer_arn": "${aws_lb.UI-ALB-1.arn}", 
+                "certificate_arn": "arn:aws:acm:us-east-1:231741524718:certificate/01534ab9-ab5b-4969-9136-17302f2602d9", 
+                "default_action": {
+                    "target_group_arn": "${aws_lb_target_group.UI-ALB-1-TG.arn}", 
+                    "type": "forward"
+                }
+            }, 
+            "abc6-com-listener": {
+                "protocol": "HTTPS", 
+                "ssl_policy": "ELBSecurityPolicy-2016-08", 
+                "port": "443", 
+                "load_balancer_arn": "${aws_lb.UI-ALB-1.arn}", 
+                "certificate_arn": "arn:aws:acm:us-east-1:231741524718:certificate/1a52cdb1-0e3b-4da9-b4f2-00f4625a674a", 
+                "default_action": {
+                    "target_group_arn": "${aws_lb_target_group.UI-ALB-1-TG.arn}", 
+                    "type": "forward"
+                }
+            }, 
+            "abc24-com-listener": {
+                "protocol": "HTTPS", 
+                "ssl_policy": "ELBSecurityPolicy-2016-08", 
+                "port": "443", 
+                "load_balancer_arn": "${aws_lb.UI-ALB-1.arn}", 
+                "certificate_arn": "arn:aws:acm:us-east-1:231741524718:certificate/6de43216-180f-4198-b5a7-3975d5df26ce", 
+                "default_action": {
+                    "target_group_arn": "${aws_lb_target_group.UI-ALB-1-TG.arn}", 
+                    "type": "forward"
+                }
+            }, 
+            "abc2-com-listener": {
+                "protocol": "HTTPS", 
+                "ssl_policy": "ELBSecurityPolicy-2016-08", 
+                "port": "443", 
+                "load_balancer_arn": "${aws_lb.UI-ALB-1.arn}", 
+                "certificate_arn": "arn:aws:acm:us-east-1:231741524718:certificate/b7e81b29-99ad-4a2e-ac55-38a78210a3da", 
+                "default_action": {
+                    "target_group_arn": "${aws_lb_target_group.UI-ALB-1-TG.arn}", 
+                    "type": "forward"
+                }
+            }, 
+            "abc13-com-listener": {
+                "protocol": "HTTPS", 
+                "ssl_policy": "ELBSecurityPolicy-2016-08", 
+                "port": "443", 
+                "load_balancer_arn": "${aws_lb.UI-ALB-1.arn}", 
+                "certificate_arn": "arn:aws:acm:us-east-1:231741524718:certificate/b45f1dfd-9b56-418d-b401-49c81e36d833", 
+                "default_action": {
+                    "target_group_arn": "${aws_lb_target_group.UI-ALB-1-TG.arn}", 
+                    "type": "forward"
+                }
+            }, 
+            "abc3-com-listener": {
+                "protocol": "HTTPS", 
+                "ssl_policy": "ELBSecurityPolicy-2016-08", 
+                "port": "443", 
+                "load_balancer_arn": "${aws_lb.UI-ALB-1.arn}", 
+                "certificate_arn": "arn:aws:acm:us-east-1:231741524718:certificate/97bba902-f293-4709-81a3-4829dde02518", 
+                "default_action": {
+                    "target_group_arn": "${aws_lb_target_group.UI-ALB-1-TG.arn}", 
+                    "type": "forward"
+                }
+            }, 
+            "abc17-com-listener": {
+                "protocol": "HTTPS", 
+                "ssl_policy": "ELBSecurityPolicy-2016-08", 
+                "port": "443", 
+                "load_balancer_arn": "${aws_lb.UI-ALB-1.arn}", 
+                "certificate_arn": "arn:aws:acm:us-east-1:231741524718:certificate/03b4049d-1756-43bc-9e0d-782bf05b5baf", 
+                "default_action": {
+                    "target_group_arn": "${aws_lb_target_group.UI-ALB-1-TG.arn}", 
+                    "type": "forward"
+                }
+            }, 
+            "abc0-com-listener": {
+                "protocol": "HTTPS", 
+                "ssl_policy": "ELBSecurityPolicy-2016-08", 
+                "port": "443", 
+                "load_balancer_arn": "${aws_lb.UI-ALB-1.arn}", 
+                "certificate_arn": "arn:aws:acm:us-east-1:231741524718:certificate/09f2d388-1d29-466a-ba32-9064da9070dd", 
+                "default_action": {
+                    "target_group_arn": "${aws_lb_target_group.UI-ALB-1-TG.arn}", 
+                    "type": "forward"
+                }
+            }, 
+            "abc15-com-listener": {
+                "protocol": "HTTPS", 
+                "ssl_policy": "ELBSecurityPolicy-2016-08", 
+                "port": "443", 
+                "load_balancer_arn": "${aws_lb.UI-ALB-1.arn}", 
+                "certificate_arn": "arn:aws:acm:us-east-1:231741524718:certificate/cfe2369e-c65d-4928-aed4-a74352b42e3e", 
+                "default_action": {
+                    "target_group_arn": "${aws_lb_target_group.UI-ALB-1-TG.arn}", 
+                    "type": "forward"
+                }
+            }, 
+            "abc23-2-com-listener": {
+                "protocol": "HTTPS", 
+                "ssl_policy": "ELBSecurityPolicy-2016-08", 
+                "port": "443", 
+                "load_balancer_arn": "${aws_lb.UI-ALB-2.arn}", 
+                "certificate_arn": "arn:aws:acm:us-east-1:231741524718:certificate/ef193f3b-ecbb-4b98-b920-25e2191f1e29", 
+                "default_action": {
+                    "target_group_arn": "${aws_lb_target_group.UI-ALB-2-TG.arn}", 
+                    "type": "forward"
+                }
+            }, 
+            "abc22-com-listener": {
+                "protocol": "HTTPS", 
+                "ssl_policy": "ELBSecurityPolicy-2016-08", 
+                "port": "443", 
+                "load_balancer_arn": "${aws_lb.UI-ALB-1.arn}", 
+                "certificate_arn": "arn:aws:acm:us-east-1:231741524718:certificate/8a4b4b6f-537c-467f-b95c-5e2070226c4f", 
+                "default_action": {
+                    "target_group_arn": "${aws_lb_target_group.UI-ALB-1-TG.arn}", 
+                    "type": "forward"
+                }
+            }, 
+            "abc25-com-listener": {
+                "protocol": "HTTPS", 
+                "ssl_policy": "ELBSecurityPolicy-2016-08", 
+                "port": "443", 
+                "load_balancer_arn": "${aws_lb.UI-ALB-1.arn}", 
+                "certificate_arn": "arn:aws:acm:us-east-1:231741524718:certificate/0fbbb698-27c8-4de4-a176-227bd626b6e3", 
+                "default_action": {
+                    "target_group_arn": "${aws_lb_target_group.UI-ALB-1-TG.arn}", 
+                    "type": "forward"
+                }
+            }, 
+            "abc8-com-listener": {
+                "protocol": "HTTPS", 
+                "ssl_policy": "ELBSecurityPolicy-2016-08", 
+                "port": "443", 
+                "load_balancer_arn": "${aws_lb.UI-ALB-1.arn}", 
+                "certificate_arn": "arn:aws:acm:us-east-1:231741524718:certificate/36fe7316-d1a3-4c7c-81e1-59ca293f8732", 
+                "default_action": {
+                    "target_group_arn": "${aws_lb_target_group.UI-ALB-1-TG.arn}", 
+                    "type": "forward"
+                }
+            }, 
+            "abc7-com-listener": {
+                "protocol": "HTTPS", 
+                "ssl_policy": "ELBSecurityPolicy-2016-08", 
+                "port": "443", 
+                "load_balancer_arn": "${aws_lb.UI-ALB-1.arn}", 
+                "certificate_arn": "arn:aws:acm:us-east-1:231741524718:certificate/354b6f10-893f-44fa-82ae-595184c666d4", 
+                "default_action": {
+                    "target_group_arn": "${aws_lb_target_group.UI-ALB-1-TG.arn}", 
+                    "type": "forward"
+                }
+            }, 
+            "abc1-com-listener": {
+                "protocol": "HTTPS", 
+                "ssl_policy": "ELBSecurityPolicy-2016-08", 
+                "port": "443", 
+                "load_balancer_arn": "${aws_lb.UI-ALB-1.arn}", 
+                "certificate_arn": "arn:aws:acm:us-east-1:231741524718:certificate/555cb565-ad07-43e5-9ebc-a45917ae462a", 
+                "default_action": {
+                    "target_group_arn": "${aws_lb_target_group.UI-ALB-1-TG.arn}", 
+                    "type": "forward"
+                }
+            }, 
+            "abc18-com-listener": {
+                "protocol": "HTTPS", 
+                "ssl_policy": "ELBSecurityPolicy-2016-08", 
+                "port": "443", 
+                "load_balancer_arn": "${aws_lb.UI-ALB-1.arn}", 
+                "certificate_arn": "arn:aws:acm:us-east-1:231741524718:certificate/a9cbec35-89af-4783-b339-c084f6980293", 
+                "default_action": {
+                    "target_group_arn": "${aws_lb_target_group.UI-ALB-1-TG.arn}", 
+                    "type": "forward"
+                }
+            }, 
+            "abc5-com-listener": {
+                "protocol": "HTTPS", 
+                "ssl_policy": "ELBSecurityPolicy-2016-08", 
+                "port": "443", 
+                "load_balancer_arn": "${aws_lb.UI-ALB-1.arn}", 
+                "certificate_arn": "arn:aws:acm:us-east-1:231741524718:certificate/c7d2c520-5cdd-4b23-b6c4-818cd03391a5", 
+                "default_action": {
+                    "target_group_arn": "${aws_lb_target_group.UI-ALB-1-TG.arn}", 
+                    "type": "forward"
+                }
+            }, 
+            "abc19-com-listener": {
+                "protocol": "HTTPS", 
+                "ssl_policy": "ELBSecurityPolicy-2016-08", 
+                "port": "443", 
+                "load_balancer_arn": "${aws_lb.UI-ALB-1.arn}", 
+                "certificate_arn": "arn:aws:acm:us-east-1:231741524718:certificate/7e784cc2-c542-48d5-9272-402d4f2b2d84", 
+                "default_action": {
+                    "target_group_arn": "${aws_lb_target_group.UI-ALB-1-TG.arn}", 
+                    "type": "forward"
+                }
+            }, 
+            "abc9-com-listener": {
+                "protocol": "HTTPS", 
+                "ssl_policy": "ELBSecurityPolicy-2016-08", 
+                "port": "443", 
+                "load_balancer_arn": "${aws_lb.UI-ALB-1.arn}", 
+                "certificate_arn": "arn:aws:acm:us-east-1:231741524718:certificate/9595a781-688e-40ee-9448-c121620b15a0", 
+                "default_action": {
+                    "target_group_arn": "${aws_lb_target_group.UI-ALB-1-TG.arn}", 
+                    "type": "forward"
+                }
+            }, 
+            "abc14-com-listener": {
+                "protocol": "HTTPS", 
+                "ssl_policy": "ELBSecurityPolicy-2016-08", 
+                "port": "443", 
+                "load_balancer_arn": "${aws_lb.UI-ALB-1.arn}", 
+                "certificate_arn": "arn:aws:acm:us-east-1:231741524718:certificate/625db540-dd31-4b98-97da-24557c0669ad", 
+                "default_action": {
+                    "target_group_arn": "${aws_lb_target_group.UI-ALB-1-TG.arn}", 
+                    "type": "forward"
+                }
+            }, 
+            "abc12-com-listener": {
+                "protocol": "HTTPS", 
+                "ssl_policy": "ELBSecurityPolicy-2016-08", 
+                "port": "443", 
+                "load_balancer_arn": "${aws_lb.UI-ALB-1.arn}", 
+                "certificate_arn": "arn:aws:acm:us-east-1:231741524718:certificate/64756294-48c7-46e1-a06f-6c1e8028dca2", 
+                "default_action": {
+                    "target_group_arn": "${aws_lb_target_group.UI-ALB-1-TG.arn}", 
+                    "type": "forward"
+                }
+            }, 
+            "abc21-com-listener": {
+                "protocol": "HTTPS", 
+                "ssl_policy": "ELBSecurityPolicy-2016-08", 
+                "port": "443", 
+                "load_balancer_arn": "${aws_lb.UI-ALB-1.arn}", 
+                "certificate_arn": "arn:aws:acm:us-east-1:231741524718:certificate/8ea77520-f328-49b1-ac7c-2bae356fdf97", 
+                "default_action": {
+                    "target_group_arn": "${aws_lb_target_group.UI-ALB-1-TG.arn}", 
+                    "type": "forward"
+                }
+            }, 
+            "abc31-com-listener": {
+                "protocol": "HTTPS", 
+                "ssl_policy": "ELBSecurityPolicy-2016-08", 
+                "port": "443", 
+                "load_balancer_arn": "${aws_lb.UI-ALB-2.arn}", 
+                "certificate_arn": "arn:aws:acm:us-east-1:231741524718:certificate/6703f9e9-c135-4f6e-ac53-4700d2138179", 
+                "default_action": {
+                    "target_group_arn": "${aws_lb_target_group.UI-ALB-2-TG.arn}", 
+                    "type": "forward"
+                }
+            }, 
+            "abc16-com-listener": {
+                "protocol": "HTTPS", 
+                "ssl_policy": "ELBSecurityPolicy-2016-08", 
+                "port": "443", 
+                "load_balancer_arn": "${aws_lb.UI-ALB-1.arn}", 
+                "certificate_arn": "arn:aws:acm:us-east-1:231741524718:certificate/7ed1c05f-9cbf-4b2a-bb76-596147c3b30b", 
+                "default_action": {
+                    "target_group_arn": "${aws_lb_target_group.UI-ALB-1-TG.arn}", 
+                    "type": "forward"
+                }
+            }, 
+            "abc10-com-listener": {
+                "protocol": "HTTPS", 
+                "ssl_policy": "ELBSecurityPolicy-2016-08", 
+                "port": "443", 
+                "load_balancer_arn": "${aws_lb.UI-ALB-1.arn}", 
+                "certificate_arn": "arn:aws:acm:us-east-1:231741524718:certificate/91c8e8cf-ef70-46bf-ab67-0efcfe75a47e", 
+                "default_action": {
+                    "target_group_arn": "${aws_lb_target_group.UI-ALB-1-TG.arn}", 
+                    "type": "forward"
+                }
+            }, 
+            "abc30-com-listener": {
+                "protocol": "HTTPS", 
+                "ssl_policy": "ELBSecurityPolicy-2016-08", 
+                "port": "443", 
+                "load_balancer_arn": "${aws_lb.UI-ALB-2.arn}", 
+                "certificate_arn": "arn:aws:acm:us-east-1:231741524718:certificate/a3fe701e-0535-49e3-b2f4-b9c97035fca0", 
+                "default_action": {
+                    "target_group_arn": "${aws_lb_target_group.UI-ALB-2-TG.arn}", 
+                    "type": "forward"
+                }
+            }, 
+            "abc23-com-listener": {
+                "protocol": "HTTPS", 
+                "ssl_policy": "ELBSecurityPolicy-2016-08", 
+                "port": "443", 
+                "load_balancer_arn": "${aws_lb.UI-ALB-1.arn}", 
+                "certificate_arn": "arn:aws:acm:us-east-1:231741524718:certificate/c89b9520-19bf-47df-ae5a-4e976ff890c2", 
+                "default_action": {
+                    "target_group_arn": "${aws_lb_target_group.UI-ALB-1-TG.arn}", 
+                    "type": "forward"
+                }
+            }, 
+            "abc4-com-listener": {
+                "protocol": "HTTPS", 
+                "ssl_policy": "ELBSecurityPolicy-2016-08", 
+                "port": "443", 
+                "load_balancer_arn": "${aws_lb.UI-ALB-1.arn}", 
+                "certificate_arn": "arn:aws:acm:us-east-1:231741524718:certificate/00d978bd-6888-4088-ad90-9f84efe49d0d", 
+                "default_action": {
+                    "target_group_arn": "${aws_lb_target_group.UI-ALB-1-TG.arn}", 
+                    "type": "forward"
+                }
+            }, 
+            "abc20-com-listener": {
+                "protocol": "HTTPS", 
+                "ssl_policy": "ELBSecurityPolicy-2016-08", 
+                "port": "443", 
+                "load_balancer_arn": "${aws_lb.UI-ALB-1.arn}", 
+                "certificate_arn": "arn:aws:acm:us-east-1:231741524718:certificate/deca61b2-e5a8-4b45-b1ae-a535f1fe08d0", 
+                "default_action": {
+                    "target_group_arn": "${aws_lb_target_group.UI-ALB-1-TG.arn}", 
+                    "type": "forward"
+                }
+            }
+        }, 
+        "aws_lb": {
+            "UI-ALB-1": {
+                "subnets": [
+                    "subnet-8e55d0ea", 
+                    "subnet-ce3a20e2"
+                ], 
+                "enable_deletion_protection": true, 
+                "internal": false, 
+                "name": "UI-ALB-1", 
+                "security_groups": [
+                    "sg-b0c144c2"
+                ]
+            }, 
+            "UI-ALB-2": {
+                "subnets": [
+                    "subnet-8e55d0ea", 
+                    "subnet-ce3a20e2"
+                ], 
+                "enable_deletion_protection": true, 
+                "internal": false, 
+                "name": "UI-ALB-2", 
+                "security_groups": [
+                    "sg-b0c144c2"
+                ]
+            }
+        }, 
+        "aws_lb_target_group": {
+            "UI-ALB-2-TG": {
+                "vpc_id": "vpc-69a57111", 
+                "enable_deletion_protection": true, 
+                "protocol": "HTTP", 
+                "name": "UI-ALB-2-TG", 
+                "port": 80
+            }, 
+            "UI-ALB-1-TG": {
+                "vpc_id": "vpc-69a57111", 
+                "enable_deletion_protection": true, 
+                "protocol": "HTTP", 
+                "name": "UI-ALB-1-TG", 
+                "port": 80
+            }
+        }, 
+        "aws_lb_target_group_attachment": {}
+    }, 
+    "provider": {
+        "aws": {
+            "region": "us-east-1"
+        }
+    }
+}

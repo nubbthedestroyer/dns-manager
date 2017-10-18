@@ -1,0 +1,17 @@
+# set the app name
+# this impacts the naming of the AWS resources and allows for multiple stacks.
+app_name: UI
+aws_profile: ender-sandbox
+vpc_id: vpc-69a57111
+aws_account: 231741524718
+tf_runtime: mac
+subnets_list:
+  - subnet-8e55d0ea
+  - subnet-ce3a20e2
+tfstate_path: tf/
+asg_id: dnsmgr-asg
+tfstate_bucket: dnsmgrbucket
+sg_ids_list:
+  - sg-b0c144c2
+aws_region: us-east-1
+ssl_policy: ELBSecurityPolicy-2016-08

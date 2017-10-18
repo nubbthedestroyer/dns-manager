@@ -4,7 +4,7 @@ import json
 import boto3
 from common import log
 # from db_mysql import get_data_mysql
-from build import build_albs, build_listeners, tf_run
+from build import build_albs, build_domains, tf_run
 import yaml
 
 s3 = boto3.client('s3')
@@ -38,7 +38,9 @@ def handler(event, context):
             "aws_lb": {},
             "aws_lb_listener": {},
             "aws_lb_target_group": {},
-            "aws_lb_target_group_attachment": {}
+            "aws_lb_target_group_attachment": {},
+            "aws_route53_record": {},
+            "aws_route53_zone": {}
         }
     }
 
@@ -46,7 +48,7 @@ def handler(event, context):
     full_block = build_albs(full_block, data, config)
 
     # build listeners
-    full_block = build_listeners(full_block, data, config)
+    full_block = build_domains(full_block, data, config)
 
     # construct the terraform infra file
     terraform_config = open('infra.tf.json', 'w')

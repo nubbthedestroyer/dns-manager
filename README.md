@@ -37,3 +37,6 @@
 > * AutoScaling Group Automation
 >   * At this point, after the TF creates the certs, ALBs, and targetgroups, you will need to then add the target groups manually to whichever ASG this traffic should point to.
 >   * to automate this, we probably just need to add a few commands to edit the ASG to connect the target groups that are created, but this can be risky if the ASG is handled through a separate infrastructure-as-code solution as it the case with Rackspace Aviator.  Need to put in a little more thought to make this elegant.
+> * Because Terraform doesn't support the new "multiple-ssl" features in ALB listeners yet, we need to add the listeners after terraform executes.
+>   * http://boto3.readthedocs.io/en/latest/reference/services/elbv2.html#ElasticLoadBalancingv2.Client.add_listener_certificates
+>   * https://github.com/terraform-providers/terraform-provider-aws/issues/1853

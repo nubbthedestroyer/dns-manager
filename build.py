@@ -7,6 +7,7 @@ import tempfile
 import subprocess as sub
 import boto3
 import yaml
+import json
 
 config = yaml.load(open('config.yml'))
 
@@ -19,9 +20,14 @@ except KeyError:
 s3 = session.client('s3')
 s3res = session.resource('s3')
 acm = session.client('acm')
+elb = session.client('elbv2')
 
 
 def build_albs(full_block, data, config):
+
+    # grab ACM certificates list for later
+    cert_list = acm.list_certificates()['CertificateSummaryList']
+
     # print(data)
     # build alb stack
     counter = Dict()
@@ -30,12 +36,15 @@ def build_albs(full_block, data, config):
         # print v
         counter[v['alb']] += 1
     # print(counter)
+    listener_block = {}
+    alb_block = {}
+    targetgroup_block = {}
     for k, v in counter.iteritems():
         if k:
             # print('key=' + str(k))
             # print('value=' + str(v))
 
-            alb_block = {
+            alb_block.update({
                 config['app_name'].upper() + '-ALB-' + k: {
                     "name": config['app_name'].upper() + '-ALB-' + k,
                     "internal": False,
@@ -43,9 +52,9 @@ def build_albs(full_block, data, config):
                     "subnets": config['subnets_list'],
                     "enable_deletion_protection": True
                 }
-            }
+            })
 
-            targetgroup_block = {
+            targetgroup_block.update({
                 config['app_name'].upper() + '-ALB-' + k + '-TG': {
                     "name": config['app_name'].upper() + '-ALB-' + k + '-TG',
                     "port": 80,
@@ -53,23 +62,51 @@ def build_albs(full_block, data, config):
                     "vpc_id": config['vpc_id'],
                     "enable_deletion_protection": True
                 }
-            }
+            })
 
-            # targetgroupassignment_block = {
-            #     config['app_name'].upper() + '-ALB-' + k + '-TG-assignment': {
-            #         "target_group_arn": "${aws_lb_target_group." + config['app_name'].upper() + '-ALB-' + k + '-TG' + '.arn}',
-            #         "target_id": config['asg_id']
-            #     }
-            # }
+            domains_for_this = []
+            for d, v in data.iteritems():
 
-            full_block['resource']['aws_lb'].update(alb_block)
-            full_block['resource']['aws_lb_target_group'].update(targetgroup_block)
-            # full_block['resource']['aws_lb_target_group_attachment'].update(targetgroupassignment_block)
+                if v['alb'] == k:
+                    block = v
+                    cert_test_result = filter(lambda cert: cert['DomainName'] == v['domain'], cert_list)
+                    cert_arn = cert_test_result[0]['CertificateArn']
+                    block['cert_arn'] = cert_arn
+                    domains_for_this.append(v)
+                # else:
+                #     print(v['alb'] + ' is not ' + k)
+
+            # print(json.dumps(domains_for_this, indent=4))
+
+            # Using just the first entry in the filtered domain list because TF requires exactly one
+            # Doesn't support the new cert counts right now
+            # https://github.com/terraform-providers/terraform-provider-aws/issues/1853
+            # so we need to add some logic to add the remaining domains to the listener with boto3.
+            # http://boto3.readthedocs.io/en/latest/reference/services/elbv2.html#ElasticLoadBalancingv2.Client.add_listener_certificates
+            # it has to happen after terraform runs unfortunately.
+
+            listener_block.update({
+                config['app_name'].upper() + '-ALB-' + k + "-LISTENER": {
+                    "load_balancer_arn": "${aws_lb." + config['app_name'].upper() + '-ALB-' + v['alb'] + '.arn}',
+                    "port": "443",
+                    "protocol": "HTTPS",
+                    "ssl_policy": config['ssl_policy'],
+                    "certificate_arn": domains_for_this[0]['cert_arn'],
+                    "default_action": {
+                        "target_group_arn": "${aws_lb_target_group." + config['app_name'].upper() + '-ALB-' + v['alb'] + '-TG' + '.arn}',
+                        "type": "forward"
+                    }
+                }
+            })
+
+    full_block['resource']['aws_lb'].update(alb_block)
+    full_block['resource']['aws_lb_target_group'].update(targetgroup_block)
+    full_block['resource']['aws_lb_listener'].update(listener_block)
 
     return full_block
 
 
-def build_listeners(full_block, data, config):
+def build_domains(full_block, data, config):
     # print(json.dumps(data, indent=4))
     # print(json.dumps(acm.list_certificates(), indent=4))
     cert_list = acm.list_certificates()['CertificateSummaryList']
@@ -97,30 +134,17 @@ def build_listeners(full_block, data, config):
             # time.sleep(1)
 
             # check to see if the cert exists
-            # print(acm.list_certificates())
+            # if not then create and grab arn
+            # if so then grab arn
+
             cert_test_result = filter(lambda cert: cert['DomainName'] == v['domain'], cert_list)
             if not cert_test_result:
                 print('Create an ACM cert for ' + v['domain'])
                 acm_response = acm.request_certificate(DomainName=v['domain'])
-                # print(json.dumps(acm_response, indent=4))
                 cert_arn = acm_response['CertificateArn']
             else:
-                print(cert_test_result)
+                # print(cert_test_result)
                 cert_arn = cert_test_result[0]['CertificateArn']
-
-            # listener_block = {
-            #     v['domain'].replace('.', '-') + '-' + 'listener': {
-            #         "load_balancer_arn": "${aws_lb." + config['app_name'].upper() + '-ALB-' + v['alb'] + '.arn}',
-            #         "port": "443",
-            #         "protocol": "HTTPS",
-            #         "ssl_policy": config['ssl_policy'],
-            #         "certificate_arn": cert_arn,
-            #         "default_action": {
-            #             "target_group_arn": "${aws_lb_target_group." + config['app_name'].upper() + '-ALB-' + v['alb'] + '-TG' + '.arn}',
-            #             "type": "forward"
-            #         }
-            #     }
-            # }
 
             aws_route53_zone_block = {
                 v['domain'].replace('.', '-') + '-' + 'route53zone': {
@@ -129,11 +153,20 @@ def build_listeners(full_block, data, config):
             }
 
             aws_route53_record_block = {
-                "zone_id": "${aws_route53_zone." + v['domain'].replace('.', '-') + '-' + 'route53zone' + ".zone_id}"
-                "name":
+                v['domain'].replace('.', '-') + '-' + 'route53record-elb': {
+                    "zone_id": "${aws_route53_zone." + v['domain'].replace('.', '-') + '-' + 'route53zone' + ".zone_id}",
+                    "name": v['domain'],
+                    "type": "A",
+                    "alias": {
+                        "name": "${aws_lb." + config['app_name'].upper() + '-ALB-' + v['alb'] + ".dns_name}",
+                        "zone_id": "${aws_lb." + config['app_name'].upper() + '-ALB-' + v['alb'] + ".}",
+                        "evaluate_target_health": True
+                    }
+                }
             }
 
-            full_block['resource']['aws_lb_listener'].update(listener_block)
+            full_block['resource']['aws_route53_record'].update(aws_route53_record_block)
+            full_block['resource']['aws_route53_zone'].update(aws_route53_zone_block)
         except TypeError:
             pass
 

@@ -16,20 +16,17 @@ while True:
     newdom = {
         "abc" + str(index): {
             'domain': "abc" + str(index) + '.com',
-            'alb': '1',
-            'cert': 'testcert5' + str(index)
+            'alb': '1'
         }
     }
     domains.update(newdom)
     domains.update({"abc23-2": {
         "domain": "abc23-2.com",
-        "alb": "2",
-        "cert": "certabc23-2"
+        "alb": "2"
     },
     "abc20-2": {
         "domain": "abc20-2.com",
-        "alb": "",
-        "cert": "cert-abc20-2"
+        "alb": ""
     }})
     index = index + 1
     # print index

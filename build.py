@@ -7,7 +7,7 @@ import tempfile
 import subprocess as sub
 import boto3
 import yaml
-import json
+# import json
 
 config = yaml.load(open('config.yml'))
 

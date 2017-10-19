@@ -1,17 +1,43 @@
+# Config data for this instance of dns-manager
+
 # set the app name
 # this impacts the naming of the AWS resources and allows for multiple stacks.
 app_name: UI
+
+# Terraform requires credentials to run.
+# this is where you can specify a Boto3 profile to use
 aws_profile: ender-sandbox
-vpc_id: vpc-69a57111
+
+# AWS Region
+aws_region: us-east-1
+
+# AWS account in question
 aws_account: 231741524718
+
+# VPC that the ALBs will be deployed into
+vpc_id: vpc-69a57111
+
+# this is a cheap hack to grab the right terraform binary.  see build.py line 195 or so.
 tf_runtime: mac
+
+# list of subnets to associate the ALBs with
 subnets_list:
   - subnet-8e55d0ea
   - subnet-ce3a20e2
-tfstate_path: tf/
-asg_id: dnsmgr-asg
+
+# bucket to store tf.state files in for persistence
 tfstate_bucket: dnsmgrbucket
+
+# path in the bucket to store tf.state files for persistence
+tfstate_path: tf/
+
+# ID of ASG to associate with TargetGroups
+asg_id: dnsmgr-asg
+
+# Security group IDs to assign to teh ALBs
+# ensure the groups are associated with the same VPC as above
 sg_ids_list:
   - sg-b0c144c2
-aws_region: us-east-1
+
+
 ssl_policy: ELBSecurityPolicy-2016-08

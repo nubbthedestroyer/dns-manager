@@ -39,5 +39,5 @@ asg_id: dnsmgr-asg
 sg_ids_list:
   - sg-b0c144c2
 
-
+# SSL policy to apply to the ALB listener.
 ssl_policy: ELBSecurityPolicy-2016-08

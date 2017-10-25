@@ -1,7 +1,7 @@
 #!/usr/bin/python
 import json
 
-limit = 622
+limit = 100
 # domains = 20
 
 # for index, domain in izip(xrange(limit), domains):
@@ -12,7 +12,7 @@ index = 0
 alb_iter = 0
 alb_num = 1
 
-doms_per_alb = 250
+doms_per_alb = 50
 
 while True:
     if index == limit:
@@ -33,10 +33,10 @@ while True:
     #     pass
     # print index
 
-domains.append({
-        "domain": "awerfghbvcxsdfgh.com",
-        "alb": "2456789"
-    })
+# domains.append({
+#         "domain": "awerfghbvcxsdfgh.com",
+#         "alb": "2456789"
+#     })
 # domains.append({
 #     "domain": "asdfghgfdsrtgyh.com",
 #     "alb": ""

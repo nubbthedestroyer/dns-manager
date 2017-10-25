@@ -1,3 +1,4 @@
+from __future__ import print_function
 import os
 from addict import Dict
 from common import log
@@ -8,6 +9,7 @@ import subprocess as sub
 import boto3
 import yaml
 import json
+
 
 # import json
 
@@ -26,6 +28,7 @@ elb = session.client('elbv2')
 
 
 def build_albs(full_block, data, config, cert_info):
+    print('Building ALB resources...')
     # grab ACM certificates list for later
     cert_list = acm.list_certificates()['CertificateSummaryList']
 
@@ -41,6 +44,7 @@ def build_albs(full_block, data, config, cert_info):
     alb_block = {}
     targetgroup_block = {}
     for k, v in counter.iteritems():
+        print('.', end='')
         if k:
             # print('key=' + str(k))
             # print('value=' + str(v))
@@ -51,7 +55,7 @@ def build_albs(full_block, data, config, cert_info):
                     "internal": False,
                     "security_groups": config['sg_ids_list'],
                     "subnets": config['subnets_list'],
-                    "enable_deletion_protection": True
+                    # "enable_deletion_protection": True
                 }
             })
 
@@ -61,7 +65,7 @@ def build_albs(full_block, data, config, cert_info):
                     "port": 80,
                     "protocol": "HTTP",
                     "vpc_id": config['vpc_id'],
-                    "enable_deletion_protection": True
+                    # "enable_deletion_protection": True
                 }
             })
 
@@ -109,9 +113,12 @@ def build_albs(full_block, data, config, cert_info):
 
 
 def build_domains(full_block, data, config, cert_info):
+    print('')
+    print('Building Route53 Resources...')
     for v in data:
         # we need to
         try:
+            print('.', end='')
             # print(d)
             # print('alb: ' + d['alb_arn'])
             if not v['alb']:
@@ -133,7 +140,7 @@ def build_domains(full_block, data, config, cert_info):
 
             aws_route53_zone_block = {
                 v['domain'].replace('.', '-') + '-' + 'route53zone': {
-                    "name": v['domain']
+                    "name": v['domain'].lower()
                 }
             }
 
@@ -144,8 +151,8 @@ def build_domains(full_block, data, config, cert_info):
                     "name": v['domain'],
                     "type": "A",
                     "alias": {
-                        "name": "${aws_lb." + config['app_name'].upper() + '-ALB-' + str(v['alb']) + ".dns_name}",
-                        "zone_id": "${aws_lb." + config['app_name'].upper() + '-ALB-' + str(v['alb']) + ".}",
+                        "name": "${lower(aws_lb." + config['app_name'].upper() + '-ALB-' + str(v['alb']) + ".dns_name)}",
+                        "zone_id": "${aws_lb." + config['app_name'].upper() + '-ALB-' + str(v['alb']) + ".zone_id}",
                         "evaluate_target_health": True
                     }
                 }
@@ -162,7 +169,7 @@ def build_domains(full_block, data, config, cert_info):
 
 def build_certs(full_block, data, config):
     # we need to build the certificates first so we can group them appropriately.
-
+    print('Building ACM Certificates...')
     doms_per_cert = config['max_doms']
 
     certed_domains = []

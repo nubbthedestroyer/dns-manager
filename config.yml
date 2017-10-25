@@ -22,8 +22,8 @@ tf_runtime: mac
 
 # list of subnets to associate the ALBs with
 subnets_list:
-  - subnet-8e55d0ea
-  - subnet-ce3a20e2
+  - subnet-1345eb58
+  - subnet-8a4fa3a5
 
 # bucket to store tf.state files in for persistence
 tfstate_bucket: dnsmgrbucket
@@ -44,4 +44,4 @@ ssl_policy: ELBSecurityPolicy-2016-08
 
 # Maxmimum number of domains per SSL cert
 # make sure you contact AWS support to increase the limit, otherwise the default is 10.
-max_doms: 10
+max_doms: 2

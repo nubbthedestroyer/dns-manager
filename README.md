@@ -5,7 +5,9 @@
 #### Abstract
 
 > This is a tool that is designed to take input from a database or json file 
-    that defines a list of domains and which ALB they should be assigned to.  
+    that defines a list of domains and which ALB they should be assigned to. 
+    It is also designed to scale to thousands of domains and ALBs and manage
+    the relationships between them. 
     Works by doing the following:
 > * Grabs the domains and info
 > * Creates/maintains enough ALBs to support the domains

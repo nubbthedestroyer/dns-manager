@@ -46,7 +46,7 @@ def handler(event, context):
             "aws_lb": {},
             "aws_lb_listener": {},
             "aws_lb_target_group": {},
-            "aws_lb_target_group_attachment": {},
+            # "aws_lb_target_group_attachment": {},
             "aws_route53_record": {},
             "aws_route53_zone": {}
         }
@@ -73,6 +73,16 @@ def handler(event, context):
     # print(json.dumps(cert_list, indent=4))
     certs_to_add = []
     for k, v in cert_info['alb_groups'].iteritems():
+        # grab ALB listener arn
+        alb_arn = elb.describe_load_balancers(
+            Names=[
+                config['app_name'].upper() + '-ALB-' + str(k)
+            ]
+        )
+        alb_listener_arn = elb.describe_listeners(
+            LoadBalancerArn=alb_arn['LoadBalancers'][0]['LoadBalancerArn']
+        )
+        # print(alb_listener_arn['Listeners'][0]['ListenerArn'])
         # print('TO ADD TO ' + str(k))
         # print(json.dumps(v, indent=4))
         for cert in v[config['max_doms']::config['max_doms']]:
@@ -82,8 +92,20 @@ def handler(event, context):
                 arn_to_add = cert_data[0]['CertificateArn']
             except IndexError:
                 pass
-            # else:
+            else:
                 # print(arn_to_add)
+                try:
+                    add_arn_response = elb.add_listener_certificates(
+                        ListenerArn=alb_listener_arn['Listeners'][0]['ListenerArn'],
+                        Certificates=[
+                            {
+                                'CertificateArn': arn_to_add,
+                                'IsDefault': False
+                            }
+                        ]
+                    )
+                except IndexError:
+                    print('Likely that something went wrong and you ALB has no listeners...')
                 # TODO: get alb arn
                 # TODO: add cert to
 

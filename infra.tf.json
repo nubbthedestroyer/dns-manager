@@ -5,10 +5,21 @@
                 "protocol": "HTTPS", 
                 "ssl_policy": "ELBSecurityPolicy-2016-08", 
                 "port": "443", 
-                "load_balancer_arn": "${aws_lb.UI-ALB-2.arn}", 
-                "certificate_arn": "arn:aws:acm:us-east-1:231741524718:certificate/7ed1c05f-9cbf-4b2a-bb76-596147c3b30b", 
+                "load_balancer_arn": "${aws_lb.UI-ALB-1.arn}", 
+                "certificate_arn": "arn:aws:acm:us-east-1:724703905414:certificate/99783c4e-53bb-4d65-891d-a3c84df6d034", 
                 "default_action": {
-                    "target_group_arn": "${aws_lb_target_group.UI-ALB-2-TG.arn}", 
+                    "target_group_arn": "${aws_lb_target_group.UI-ALB-1-TG.arn}", 
+                    "type": "forward"
+                }
+            }, 
+            "UI-ALB-2456789-LISTENER": {
+                "protocol": "HTTPS", 
+                "ssl_policy": "ELBSecurityPolicy-2016-08", 
+                "port": "443", 
+                "load_balancer_arn": "${aws_lb.UI-ALB-2456789.arn}", 
+                "certificate_arn": "arn:aws:acm:us-east-1:724703905414:certificate/67ce4a00-8bf1-40c0-adac-3119c4402746", 
+                "default_action": {
+                    "target_group_arn": "${aws_lb_target_group.UI-ALB-2456789-TG.arn}", 
                     "type": "forward"
                 }
             }, 
@@ -17,9 +28,20 @@
                 "ssl_policy": "ELBSecurityPolicy-2016-08", 
                 "port": "443", 
                 "load_balancer_arn": "${aws_lb.UI-ALB-2.arn}", 
-                "certificate_arn": "arn:aws:acm:us-east-1:231741524718:certificate/ef193f3b-ecbb-4b98-b920-25e2191f1e29", 
+                "certificate_arn": "arn:aws:acm:us-east-1:724703905414:certificate/f50f4192-7c52-443b-b95a-7d5f4a9b2e08", 
                 "default_action": {
                     "target_group_arn": "${aws_lb_target_group.UI-ALB-2-TG.arn}", 
+                    "type": "forward"
+                }
+            }, 
+            "UI-ALB-3-LISTENER": {
+                "protocol": "HTTPS", 
+                "ssl_policy": "ELBSecurityPolicy-2016-08", 
+                "port": "443", 
+                "load_balancer_arn": "${aws_lb.UI-ALB-3.arn}", 
+                "certificate_arn": "arn:aws:acm:us-east-1:724703905414:certificate/22a607a9-7b5b-46ec-8b12-499431806be1", 
+                "default_action": {
+                    "target_group_arn": "${aws_lb_target_group.UI-ALB-3-TG.arn}", 
                     "type": "forward"
                 }
             }
@@ -33,6 +55,30 @@
                 "enable_deletion_protection": true, 
                 "internal": false, 
                 "name": "UI-ALB-1", 
+                "security_groups": [
+                    "sg-b0c144c2"
+                ]
+            }, 
+            "UI-ALB-2456789": {
+                "subnets": [
+                    "subnet-8e55d0ea", 
+                    "subnet-ce3a20e2"
+                ], 
+                "enable_deletion_protection": true, 
+                "internal": false, 
+                "name": "UI-ALB-2456789", 
+                "security_groups": [
+                    "sg-b0c144c2"
+                ]
+            }, 
+            "UI-ALB-3": {
+                "subnets": [
+                    "subnet-8e55d0ea", 
+                    "subnet-ce3a20e2"
+                ], 
+                "enable_deletion_protection": true, 
+                "internal": false, 
+                "name": "UI-ALB-3", 
                 "security_groups": [
                     "sg-b0c144c2"
                 ]
@@ -51,279 +97,26 @@
             }
         }, 
         "aws_route53_record": {
-            "abc4-com-route53record-elb": {
+            "awerfghbvcxsdfgh-com-route53record-elb": {
                 "alias": {
                     "evaluate_target_health": true, 
-                    "name": "${aws_lb.UI-ALB-1.dns_name}", 
-                    "zone_id": "${aws_lb.UI-ALB-1.}"
+                    "name": "${aws_lb.UI-ALB-2456789.dns_name}", 
+                    "zone_id": "${aws_lb.UI-ALB-2456789.}"
                 }, 
                 "type": "A", 
-                "zone_id": "${aws_route53_zone.abc4-com-route53zone.zone_id}", 
-                "name": "abc4.com"
-            }, 
-            "abc3-com-route53record-elb": {
-                "alias": {
-                    "evaluate_target_health": true, 
-                    "name": "${aws_lb.UI-ALB-1.dns_name}", 
-                    "zone_id": "${aws_lb.UI-ALB-1.}"
-                }, 
-                "type": "A", 
-                "zone_id": "${aws_route53_zone.abc3-com-route53zone.zone_id}", 
-                "name": "abc3.com"
-            }, 
-            "abc2-com-route53record-elb": {
-                "alias": {
-                    "evaluate_target_health": true, 
-                    "name": "${aws_lb.UI-ALB-1.dns_name}", 
-                    "zone_id": "${aws_lb.UI-ALB-1.}"
-                }, 
-                "type": "A", 
-                "zone_id": "${aws_route53_zone.abc2-com-route53zone.zone_id}", 
-                "name": "abc2.com"
-            }, 
-            "abc23-2-com-route53record-elb": {
-                "alias": {
-                    "evaluate_target_health": true, 
-                    "name": "${aws_lb.UI-ALB-2.dns_name}", 
-                    "zone_id": "${aws_lb.UI-ALB-2.}"
-                }, 
-                "type": "A", 
-                "zone_id": "${aws_route53_zone.abc23-2-com-route53zone.zone_id}", 
-                "name": "abc23-2.com"
-            }, 
-            "abc15-com-route53record-elb": {
-                "alias": {
-                    "evaluate_target_health": true, 
-                    "name": "${aws_lb.UI-ALB-1.dns_name}", 
-                    "zone_id": "${aws_lb.UI-ALB-1.}"
-                }, 
-                "type": "A", 
-                "zone_id": "${aws_route53_zone.abc15-com-route53zone.zone_id}", 
-                "name": "abc15.com"
-            }, 
-            "abc16-com-route53record-elb": {
-                "alias": {
-                    "evaluate_target_health": true, 
-                    "name": "${aws_lb.UI-ALB-1.dns_name}", 
-                    "zone_id": "${aws_lb.UI-ALB-1.}"
-                }, 
-                "type": "A", 
-                "zone_id": "${aws_route53_zone.abc16-com-route53zone.zone_id}", 
-                "name": "abc16.com"
-            }, 
-            "abc19-com-route53record-elb": {
-                "alias": {
-                    "evaluate_target_health": true, 
-                    "name": "${aws_lb.UI-ALB-1.dns_name}", 
-                    "zone_id": "${aws_lb.UI-ALB-1.}"
-                }, 
-                "type": "A", 
-                "zone_id": "${aws_route53_zone.abc19-com-route53zone.zone_id}", 
-                "name": "abc19.com"
-            }, 
-            "abc10-com-route53record-elb": {
-                "alias": {
-                    "evaluate_target_health": true, 
-                    "name": "${aws_lb.UI-ALB-1.dns_name}", 
-                    "zone_id": "${aws_lb.UI-ALB-1.}"
-                }, 
-                "type": "A", 
-                "zone_id": "${aws_route53_zone.abc10-com-route53zone.zone_id}", 
-                "name": "abc10.com"
-            }, 
-            "abc12-com-route53record-elb": {
-                "alias": {
-                    "evaluate_target_health": true, 
-                    "name": "${aws_lb.UI-ALB-1.dns_name}", 
-                    "zone_id": "${aws_lb.UI-ALB-1.}"
-                }, 
-                "type": "A", 
-                "zone_id": "${aws_route53_zone.abc12-com-route53zone.zone_id}", 
-                "name": "abc12.com"
-            }, 
-            "abc6-com-route53record-elb": {
-                "alias": {
-                    "evaluate_target_health": true, 
-                    "name": "${aws_lb.UI-ALB-1.dns_name}", 
-                    "zone_id": "${aws_lb.UI-ALB-1.}"
-                }, 
-                "type": "A", 
-                "zone_id": "${aws_route53_zone.abc6-com-route53zone.zone_id}", 
-                "name": "abc6.com"
-            }, 
-            "abc5-com-route53record-elb": {
-                "alias": {
-                    "evaluate_target_health": true, 
-                    "name": "${aws_lb.UI-ALB-1.dns_name}", 
-                    "zone_id": "${aws_lb.UI-ALB-1.}"
-                }, 
-                "type": "A", 
-                "zone_id": "${aws_route53_zone.abc5-com-route53zone.zone_id}", 
-                "name": "abc5.com"
-            }, 
-            "abc21-com-route53record-elb": {
-                "alias": {
-                    "evaluate_target_health": true, 
-                    "name": "${aws_lb.UI-ALB-1.dns_name}", 
-                    "zone_id": "${aws_lb.UI-ALB-1.}"
-                }, 
-                "type": "A", 
-                "zone_id": "${aws_route53_zone.abc21-com-route53zone.zone_id}", 
-                "name": "abc21.com"
-            }, 
-            "abc1-com-route53record-elb": {
-                "alias": {
-                    "evaluate_target_health": true, 
-                    "name": "${aws_lb.UI-ALB-1.dns_name}", 
-                    "zone_id": "${aws_lb.UI-ALB-1.}"
-                }, 
-                "type": "A", 
-                "zone_id": "${aws_route53_zone.abc1-com-route53zone.zone_id}", 
-                "name": "abc1.com"
-            }, 
-            "abc17-com-route53record-elb": {
-                "alias": {
-                    "evaluate_target_health": true, 
-                    "name": "${aws_lb.UI-ALB-1.dns_name}", 
-                    "zone_id": "${aws_lb.UI-ALB-1.}"
-                }, 
-                "type": "A", 
-                "zone_id": "${aws_route53_zone.abc17-com-route53zone.zone_id}", 
-                "name": "abc17.com"
-            }, 
-            "abc13-com-route53record-elb": {
-                "alias": {
-                    "evaluate_target_health": true, 
-                    "name": "${aws_lb.UI-ALB-1.dns_name}", 
-                    "zone_id": "${aws_lb.UI-ALB-1.}"
-                }, 
-                "type": "A", 
-                "zone_id": "${aws_route53_zone.abc13-com-route53zone.zone_id}", 
-                "name": "abc13.com"
-            }, 
-            "abc8-com-route53record-elb": {
-                "alias": {
-                    "evaluate_target_health": true, 
-                    "name": "${aws_lb.UI-ALB-1.dns_name}", 
-                    "zone_id": "${aws_lb.UI-ALB-1.}"
-                }, 
-                "type": "A", 
-                "zone_id": "${aws_route53_zone.abc8-com-route53zone.zone_id}", 
-                "name": "abc8.com"
-            }, 
-            "abc18-com-route53record-elb": {
-                "alias": {
-                    "evaluate_target_health": true, 
-                    "name": "${aws_lb.UI-ALB-1.dns_name}", 
-                    "zone_id": "${aws_lb.UI-ALB-1.}"
-                }, 
-                "type": "A", 
-                "zone_id": "${aws_route53_zone.abc18-com-route53zone.zone_id}", 
-                "name": "abc18.com"
-            }, 
-            "abc11-com-route53record-elb": {
-                "alias": {
-                    "evaluate_target_health": true, 
-                    "name": "${aws_lb.UI-ALB-1.dns_name}", 
-                    "zone_id": "${aws_lb.UI-ALB-1.}"
-                }, 
-                "type": "A", 
-                "zone_id": "${aws_route53_zone.abc11-com-route53zone.zone_id}", 
-                "name": "abc11.com"
-            }, 
-            "abc14-com-route53record-elb": {
-                "alias": {
-                    "evaluate_target_health": true, 
-                    "name": "${aws_lb.UI-ALB-1.dns_name}", 
-                    "zone_id": "${aws_lb.UI-ALB-1.}"
-                }, 
-                "type": "A", 
-                "zone_id": "${aws_route53_zone.abc14-com-route53zone.zone_id}", 
-                "name": "abc14.com"
-            }, 
-            "abc22-com-route53record-elb": {
-                "alias": {
-                    "evaluate_target_health": true, 
-                    "name": "${aws_lb.UI-ALB-1.dns_name}", 
-                    "zone_id": "${aws_lb.UI-ALB-1.}"
-                }, 
-                "type": "A", 
-                "zone_id": "${aws_route53_zone.abc22-com-route53zone.zone_id}", 
-                "name": "abc22.com"
-            }, 
-            "abc24-com-route53record-elb": {
-                "alias": {
-                    "evaluate_target_health": true, 
-                    "name": "${aws_lb.UI-ALB-1.dns_name}", 
-                    "zone_id": "${aws_lb.UI-ALB-1.}"
-                }, 
-                "type": "A", 
-                "zone_id": "${aws_route53_zone.abc24-com-route53zone.zone_id}", 
-                "name": "abc24.com"
-            }, 
-            "abc25-com-route53record-elb": {
-                "alias": {
-                    "evaluate_target_health": true, 
-                    "name": "${aws_lb.UI-ALB-1.dns_name}", 
-                    "zone_id": "${aws_lb.UI-ALB-1.}"
-                }, 
-                "type": "A", 
-                "zone_id": "${aws_route53_zone.abc25-com-route53zone.zone_id}", 
-                "name": "abc25.com"
-            }, 
-            "abc9-com-route53record-elb": {
-                "alias": {
-                    "evaluate_target_health": true, 
-                    "name": "${aws_lb.UI-ALB-1.dns_name}", 
-                    "zone_id": "${aws_lb.UI-ALB-1.}"
-                }, 
-                "type": "A", 
-                "zone_id": "${aws_route53_zone.abc9-com-route53zone.zone_id}", 
-                "name": "abc9.com"
-            }, 
-            "abc7-com-route53record-elb": {
-                "alias": {
-                    "evaluate_target_health": true, 
-                    "name": "${aws_lb.UI-ALB-1.dns_name}", 
-                    "zone_id": "${aws_lb.UI-ALB-1.}"
-                }, 
-                "type": "A", 
-                "zone_id": "${aws_route53_zone.abc7-com-route53zone.zone_id}", 
-                "name": "abc7.com"
-            }, 
-            "abc23-com-route53record-elb": {
-                "alias": {
-                    "evaluate_target_health": true, 
-                    "name": "${aws_lb.UI-ALB-1.dns_name}", 
-                    "zone_id": "${aws_lb.UI-ALB-1.}"
-                }, 
-                "type": "A", 
-                "zone_id": "${aws_route53_zone.abc23-com-route53zone.zone_id}", 
-                "name": "abc23.com"
-            }, 
-            "abc20-com-route53record-elb": {
-                "alias": {
-                    "evaluate_target_health": true, 
-                    "name": "${aws_lb.UI-ALB-1.dns_name}", 
-                    "zone_id": "${aws_lb.UI-ALB-1.}"
-                }, 
-                "type": "A", 
-                "zone_id": "${aws_route53_zone.abc20-com-route53zone.zone_id}", 
-                "name": "abc20.com"
-            }, 
-            "abc0-com-route53record-elb": {
-                "alias": {
-                    "evaluate_target_health": true, 
-                    "name": "${aws_lb.UI-ALB-1.dns_name}", 
-                    "zone_id": "${aws_lb.UI-ALB-1.}"
-                }, 
-                "type": "A", 
-                "zone_id": "${aws_route53_zone.abc0-com-route53zone.zone_id}", 
-                "name": "abc0.com"
+                "zone_id": "${aws_route53_zone.awerfghbvcxsdfgh-com-route53zone.zone_id}", 
+                "name": "awerfghbvcxsdfgh.com"
             }
         }, 
         "aws_lb_target_group_attachment": {}, 
         "aws_lb_target_group": {
+            "UI-ALB-3-TG": {
+                "vpc_id": "vpc-69a57111", 
+                "enable_deletion_protection": true, 
+                "protocol": "HTTP", 
+                "name": "UI-ALB-3-TG", 
+                "port": 80
+            }, 
             "UI-ALB-2-TG": {
                 "vpc_id": "vpc-69a57111", 
                 "enable_deletion_protection": true, 
@@ -337,89 +130,18 @@
                 "protocol": "HTTP", 
                 "name": "UI-ALB-1-TG", 
                 "port": 80
+            }, 
+            "UI-ALB-2456789-TG": {
+                "vpc_id": "vpc-69a57111", 
+                "enable_deletion_protection": true, 
+                "protocol": "HTTP", 
+                "name": "UI-ALB-2456789-TG", 
+                "port": 80
             }
         }, 
         "aws_route53_zone": {
-            "abc13-com-route53zone": {
-                "name": "abc13.com"
-            }, 
-            "abc2-com-route53zone": {
-                "name": "abc2.com"
-            }, 
-            "abc25-com-route53zone": {
-                "name": "abc25.com"
-            }, 
-            "abc5-com-route53zone": {
-                "name": "abc5.com"
-            }, 
-            "abc17-com-route53zone": {
-                "name": "abc17.com"
-            }, 
-            "abc11-com-route53zone": {
-                "name": "abc11.com"
-            }, 
-            "abc21-com-route53zone": {
-                "name": "abc21.com"
-            }, 
-            "abc23-com-route53zone": {
-                "name": "abc23.com"
-            }, 
-            "abc22-com-route53zone": {
-                "name": "abc22.com"
-            }, 
-            "abc16-com-route53zone": {
-                "name": "abc16.com"
-            }, 
-            "abc12-com-route53zone": {
-                "name": "abc12.com"
-            }, 
-            "abc6-com-route53zone": {
-                "name": "abc6.com"
-            }, 
-            "abc14-com-route53zone": {
-                "name": "abc14.com"
-            }, 
-            "abc10-com-route53zone": {
-                "name": "abc10.com"
-            }, 
-            "abc15-com-route53zone": {
-                "name": "abc15.com"
-            }, 
-            "abc23-2-com-route53zone": {
-                "name": "abc23-2.com"
-            }, 
-            "abc18-com-route53zone": {
-                "name": "abc18.com"
-            }, 
-            "abc20-com-route53zone": {
-                "name": "abc20.com"
-            }, 
-            "abc0-com-route53zone": {
-                "name": "abc0.com"
-            }, 
-            "abc1-com-route53zone": {
-                "name": "abc1.com"
-            }, 
-            "abc9-com-route53zone": {
-                "name": "abc9.com"
-            }, 
-            "abc3-com-route53zone": {
-                "name": "abc3.com"
-            }, 
-            "abc8-com-route53zone": {
-                "name": "abc8.com"
-            }, 
-            "abc24-com-route53zone": {
-                "name": "abc24.com"
-            }, 
-            "abc19-com-route53zone": {
-                "name": "abc19.com"
-            }, 
-            "abc4-com-route53zone": {
-                "name": "abc4.com"
-            }, 
-            "abc7-com-route53zone": {
-                "name": "abc7.com"
+            "awerfghbvcxsdfgh-com-route53zone": {
+                "name": "awerfghbvcxsdfgh.com"
             }
         }
     }, 

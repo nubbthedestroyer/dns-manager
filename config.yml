@@ -6,7 +6,7 @@ app_name: UI
 
 # Terraform requires credentials to run.
 # this is where you can specify a Boto3 profile to use
-aws_profile: ender-sandbox
+aws_profile: mlucas-sandbox
 
 # AWS Region
 aws_region: us-east-1
@@ -41,3 +41,7 @@ sg_ids_list:
 
 # SSL policy to apply to the ALB listener.
 ssl_policy: ELBSecurityPolicy-2016-08
+
+# Maxmimum number of domains per SSL cert
+# make sure you contact AWS support to increase the limit, otherwise the default is 10.
+max_doms: 10

@@ -4,13 +4,21 @@ import json
 import boto3
 from common import log
 # from db_mysql import get_data_mysql
-from build import build_albs, build_domains, tf_run
+from build import build_albs, build_domains, build_certs, tf_run
 import yaml
 
-s3 = boto3.client('s3')
-s3res = boto3.resource('s3')
-
 config = yaml.load(open('config.yml'))
+
+try:
+    if config['aws_profile']:
+        session = boto3.Session(profile_name=config['aws_profile'], region_name=config['aws_region'])
+except KeyError:
+    session = boto3.Session(region_name=config['aws_region'])
+
+s3 = session.client('s3')
+s3res = session.resource('s3')
+acm = session.client('acm')
+elb = session.client('elbv2')
 
 
 def handler(event, context):
@@ -44,11 +52,13 @@ def handler(event, context):
         }
     }
 
+    cert_info = build_certs(full_block, data, config)
+
     # build alb stack
-    full_block = build_albs(full_block, data, config)
+    full_block = build_albs(full_block, data, config, cert_info)
 
     # build listeners
-    full_block = build_domains(full_block, data, config)
+    full_block = build_domains(full_block, data, config, cert_info)
 
     # construct the terraform infra file
     terraform_config = open('infra.tf.json', 'w')
@@ -58,6 +68,24 @@ def handler(event, context):
     # run the terraform
     # dont do this yet until you validate the new ACM SSL certificates through emails.  See the readme for more information.
     # tf_run(full_block, data, config)
+
+    cert_list = acm.list_certificates()['CertificateSummaryList']
+    print(json.dumps(cert_list, indent=4))
+    certs_to_add = []
+    for k, v in cert_info['alb_groups'].iteritems():
+        print('TO ADD TO ' + str(k))
+        # print(json.dumps(v, indent=4))
+        for cert in v[config['max_doms']::config['max_doms']]:
+            # print(cert)
+            cert_data = filter(lambda cert1: cert1['DomainName'] == cert, cert_list)
+            try:
+                arn_to_add = cert_data[0]['CertificateArn']
+            except IndexError:
+                pass
+            else:
+                print(arn_to_add)
+                # TODO: get alb arn
+                # TODO: add cert to
 
 
 handler(1, 2)

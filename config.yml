@@ -15,7 +15,7 @@ aws_region: us-east-1
 aws_account: 231741524718
 
 # VPC that the ALBs will be deployed into
-vpc_id: vpc-69a57111
+vpc_id: vpc-1ab56f62
 
 # this is a cheap hack to grab the right terraform binary.  see build.py line 195 or so.
 tf_runtime: mac
@@ -37,7 +37,7 @@ asg_id: dnsmgr-asg
 # Security group IDs to assign to teh ALBs
 # ensure the groups are associated with the same VPC as above
 sg_ids_list:
-  - sg-b0c144c2
+  - sg-cf6e29bd
 
 # SSL policy to apply to the ALB listener.
 ssl_policy: ELBSecurityPolicy-2016-08

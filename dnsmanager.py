@@ -70,10 +70,10 @@ def handler(event, context):
     # tf_run(full_block, data, config)
 
     cert_list = acm.list_certificates()['CertificateSummaryList']
-    print(json.dumps(cert_list, indent=4))
+    # print(json.dumps(cert_list, indent=4))
     certs_to_add = []
     for k, v in cert_info['alb_groups'].iteritems():
-        print('TO ADD TO ' + str(k))
+        # print('TO ADD TO ' + str(k))
         # print(json.dumps(v, indent=4))
         for cert in v[config['max_doms']::config['max_doms']]:
             # print(cert)
@@ -82,8 +82,8 @@ def handler(event, context):
                 arn_to_add = cert_data[0]['CertificateArn']
             except IndexError:
                 pass
-            else:
-                print(arn_to_add)
+            # else:
+                # print(arn_to_add)
                 # TODO: get alb arn
                 # TODO: add cert to
 

@@ -144,8 +144,8 @@ def build_domains(full_block, data, config, cert_info):
                     "name": v['domain'],
                     "type": "A",
                     "alias": {
-                        "name": "${aws_lb." + config['app_name'].upper() + '-ALB-' + v['alb'] + ".dns_name}",
-                        "zone_id": "${aws_lb." + config['app_name'].upper() + '-ALB-' + v['alb'] + ".}",
+                        "name": "${aws_lb." + config['app_name'].upper() + '-ALB-' + str(v['alb']) + ".dns_name}",
+                        "zone_id": "${aws_lb." + config['app_name'].upper() + '-ALB-' + str(v['alb']) + ".}",
                         "evaluate_target_health": True
                     }
                 }
@@ -154,6 +154,7 @@ def build_domains(full_block, data, config, cert_info):
             full_block['resource']['aws_route53_record'].update(aws_route53_record_block)
             full_block['resource']['aws_route53_zone'].update(aws_route53_zone_block)
         except TypeError:
+            print(v['domain'].replace('.', '-') + '-' + 'route53record-elb' + ' failed due to TypeError...')
             pass
 
     return full_block
